@@ -1,12 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-# 2011-07-28 13:06:45 pkrawczak@gmail.com
-
-
-
-
-
 import gui, time, random, pygame
 
 class RunningButton(gui.Button):
@@ -45,11 +36,11 @@ class CGUI(gui.GUI):
 		
 	def update_time_limit(self):
 		self.time_limit = 10.
-		for i in xrange(1, self.level):
+		for i in range(1, self.level):
 			self.time_limit *= 5./10.
 			
 	def update_level(self):
-		self.level = 1 + self.score / 20000
+		self.level = 1 + self.score // 20000
 		
 	
 	def reset_game(self):
