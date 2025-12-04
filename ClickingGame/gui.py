@@ -1,6 +1,3 @@
-# 2011-07-28 13:06:45 pkrawczak@gmail.com
-
-
 import pygame, threading, sys, stoppablethread, time
 from pygame.locals import *
 
@@ -142,10 +139,9 @@ class Button(pygame.Surface):
 		
 	
 
-class GUI(stoppablethread.StoppableThread):
+class GUI:
 	
 	def __init__(self, size):
-		stoppablethread.StoppableThread.__init__(self)
 		pygame.init()
 		self.screen = pygame.display.set_mode(size)
 		self.buttons = []
@@ -153,10 +149,12 @@ class GUI(stoppablethread.StoppableThread):
 		self.sprites = []
 		self.text_inputs = []
 		self.background_image = None
+		self.running = True
 		
-	def run(self):
+	def start(self):
 		self.preloop()
-		while not self.stopped():
+		clock = pygame.time.Clock()
+		while self.running:
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					self.exit()
@@ -206,10 +204,12 @@ class GUI(stoppablethread.StoppableThread):
 				text_input.blit_on(self.screen)
 				
 			pygame.display.flip()
+			clock.tick(60)
 
 	def exit(self):
 		self.preexit()
-		self.stop()
+		self.running = False
+		sys.exit()
 
 	def preloop(self):
 		pass
@@ -227,4 +227,3 @@ if __name__ == "__main__":
 
 	testgui = GUI()
 	testgui.start()
-
