@@ -1,4 +1,4 @@
-import pygame, threading, sys, stoppablethread, time
+import pygame, sys, time
 from pygame.locals import *
 
 
@@ -43,14 +43,13 @@ class TextInput(pygame.Surface):
 		self.text += chr(key)
 
 
-class AnimatedSprite(pygame.Surface, stoppablethread.StoppableThread):
+class AnimatedSprite(pygame.Surface):
 
 	def __init__(self, pos, size):
 		pygame.Surface.__init__(self, size)
-		stoppablethread.StoppableThread.__init__(self)
 		
 		self.frames = []
-		self.speed = 6 # frames per second
+		self.speed = 6
 		self.frame_counter = 0
 		self.background_color = (0,0,0)
 		self.pos = pos
@@ -67,9 +66,6 @@ class AnimatedSprite(pygame.Surface, stoppablethread.StoppableThread):
 			time.sleep(1. / self.speed)
 			self.frame_counter += 1
 			if self.frame_counter >= len(self.frames): self.frame_counter = 0
-		
-		
-		
 
 
 class Caption(pygame.Surface):
@@ -94,8 +90,6 @@ class Caption(pygame.Surface):
 		self.blit(text, (self.margin,self.margin))
 		surface.blit(self, self.pos)
 		
-		
-	
 
 class Button(pygame.Surface):
 	
@@ -136,7 +130,6 @@ class Button(pygame.Surface):
 		 pos[1] >= self.pos[1] and\
 		 pos[0] <= self.pos[0]+self.size[0] and\
 		 pos[1] <= self.pos[1]+self.size[1])
-		
 	
 
 class GUI:
