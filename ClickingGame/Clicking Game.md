@@ -15,21 +15,19 @@ Next download bg.png and gui.py, then move them into the folder you just made.
 
 ### Copy & Paste Code!
 Now we can start copying some code!
-We will be working from two .py files but you've already downloaded one of them
+You'll be working from two .py files but you've already downloaded one of them
 
-### Step 1, imports
+#### Step 1, imports
 Copy and paste the following, save and name it "main.py"
 Make fure you've saved it into the same folder you made earlier
 ```
 import gui, time, random, pygame
 ```
-
 Now all your files should be in the same folder and look a little like this:
 <img width="626" height="246" alt="image" src="https://github.com/user-attachments/assets/b02cc8a1-8189-43f4-aee6-8dd5e20a52b8" />
 
-
-### Step 2, classes
-#### Running Button
+#### Step 2, classes
+##### Running Button
 ```
 class RunningButton(gui.Button):
 	size = (50, 50)
@@ -49,7 +47,7 @@ class RunningButton(gui.Button):
 		return (pos_x, pos_y)
 ```
 
-#### CGUI
+###### CGUI
 ```
 class CGUI(gui.GUI):
 	size = (500, 650)
@@ -125,7 +123,7 @@ class CGUI(gui.GUI):
 		self.update_time_limit()
 ```
 
-### Step 3, ready... set... go!
+#### Step 3, ready... set... go!
 Copy the following code to make the program run
 ```
 if __name__ == "__main__":
@@ -133,13 +131,20 @@ if __name__ == "__main__":
 	cg.start()
 ```
 
-
-
-
-
-
+### Run forrest, run!
+Give your game a test drive. What do you like about it? What don't you like about it?
 
 ### Challenges
 #### Challenge 1
 In "main.py", look at class "RunningButton".
-There are 3 things you can tinker with... maybe changing the size of the buttons
+There are 3 things you can tinker with... maybe changing the size of the buttons or changing their colours?
+
+#### Challenge 2
+Give your game a makeover, in "main.py". Maybe you could change the background image or change the caption of the game?
+(Caption is the text that appears at the top of the window, right now it says "clicking game")
+
+#### Challenge 3
+Scoring, give the scoring system a tinker in "main.py". Change how quickly you get points, maybe chyange how many you need to level up? You could even change how fast you have to click the buttons
+
+#### Challenge 4
+What other changes do you want to make to your code?
