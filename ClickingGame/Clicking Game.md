@@ -10,7 +10,7 @@ Name it whatever you want but maybe "ClickingGame" so you know what it is.
 
 <img width="538" height="91" alt="image" src="https://github.com/user-attachments/assets/8c40172f-9d3e-4634-9399-05d5cafbd08e" />
 
-### Download bg.png
+### Download bg.png & gui.py
 Next download bg.png and gui.py, then move them into the folder you just made.
 
 ### Copy & Paste Code!
