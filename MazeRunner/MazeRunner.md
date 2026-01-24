@@ -35,6 +35,10 @@
 
 ## No we can run our game...
 What are we missing?
+```
+if __name__ == "__main__":
+    main()
+```
 
 ## Challenges
 ### Easy
