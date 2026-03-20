@@ -144,3 +144,14 @@ while running:
 pygame.quit()
 sys.exit()
 ```
+
+## Now run your code
+# Challenges
+## Challenge 1 - Colour Changer
+Try out some new colours, make your game unique to the colours you like!
+
+## Challenge 2 - Basket size?
+Try making the basket a different size per level, do you make it harder or easier as the game goes on
+
+## Challenge 3 - Object overload!
+Make more objects spawn per level, how chaotic can you make it!
