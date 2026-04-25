@@ -5,7 +5,7 @@ import sys
 pygame.init()
 
 # Screen setup
-WIDTH = 800
+WIDTH = 1000
 HEIGHT = 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Color Memory Match")
@@ -15,12 +15,16 @@ clock = pygame.time.Clock()
 FROST = (255, 224, 233) # Petal Frost
 MAUVE = (82, 46, 56) # Mauve Shadow
 PLUM = (96, 36, 55) # Wine Plum
-ROSE = (185, 55, 94) # Rosewood
-BLUSH = (224, 87, 128) # Blush Rose
-PETAL = (255, 122, 162) # Petal Rouge
 BLOSSOM = (255, 194, 212) # Soft Blossom
-WINE = (138, 40, 70) # Dark Amaranth
-MIST = (255, 158, 187) # Pink Mist
+RED = (255, 50, 50)
+GREEN = (50, 255, 50)
+BLUE = (50, 150, 255)
+YELLOW = (255, 255, 50)
+PURPLE = (200, 50, 255)
+ORANGE = (255, 150, 50)
+INDIGO = (68, 3, 129)
+AQUA = (81, 229, 255)
+PINK = (236, 54, 141)
 
 # Fonts
 big_font = pygame.font.Font(None, 72)
@@ -28,7 +32,7 @@ font = pygame.font.Font(None, 48)
 small_font = pygame.font.Font(None, 36)
 
 # Game colors to remember
-GAME_COLORS = [ROSE, BLUSH, PETAL, BLOSSOM, WINE, MIST]
+GAME_COLORS = [PINK, RED, ORANGE, YELLOW, GREEN, AQUA, BLUE, INDIGO, PURPLE]
 
 # Game state
 game_state = "start"  # start, show, memorize, playing, correct, wrong, win
@@ -37,22 +41,22 @@ player_sequence = []
 level = 1
 score = 0
 
-# Create colored squares (4x4 grid)
-squares = []
-for row in range(4):
-    for col in range(4):
-        # Only use 6 squares (3 pairs)
-        if len(squares) < 6:
-            x = 150 + col * 130
-            y = 150 + row * 130
-            # Add each color twice for matching pairs
-            if len(squares) < 3:
-                squares.append({"x": x, "y": y, "color": GAME_COLORS[len(squares)], "clicked": False})
-            else:
-                squares.append({"x": x, "y": y, "color": GAME_COLORS[len(squares) - 3], "clicked": False})
+color_pairs = []
+for color in GAME_COLORS:
+    color_pairs.append(color)
+    color_pairs.append(color) # Adding colour again
 
-# Shuffle squares
-random.shuffle(squares)
+random.shuffle(color_pairs)
+
+squares = []
+index = 0
+for row in range(4):
+    for col in range(6):
+        if index < 18:
+            x = 120 + col * 130
+            y = 120 + row * 130
+            squares.append({"x": x, "y": y, "color": color_pairs[index], "clicked": False})
+            index += 1
 
 # Selected squares for matching
 selected = []
@@ -102,17 +106,49 @@ while running:
                                     # No match
                                     game_state = "wrong"
                                     show_timer = 1.0
-        
-        # Restart
+
         if event.type == pygame.KEYDOWN and game_state == "win":
+            if event.key == pygame.K_SPACE:
+                # Move onto next level
+                level += 1
+                selected = []
+                
+                # Shuffle colors again
+                random.shuffle(color_pairs)
+                
+                # Recreate squares with new shuffled colors
+                squares = []
+                index = 0
+                for row in range(4):
+                    for col in range(6):
+                        if index < 18:
+                            x = 120 + col * 130
+                            y = 120 + row * 130
+                            squares.append({"x": x, "y": y, "color": color_pairs[index], "clicked": False})
+                            index += 1
+                
+                game_state = "playing"
+                
             if event.key == pygame.K_r:
                 # Reset everything
                 game_state = "start"
                 score = 0
+                level = 1
                 selected = []
-                for square in squares:
-                    square["clicked"] = False
-                random.shuffle(squares)
+                
+                # Shuffle colors again
+                random.shuffle(color_pairs)
+                
+                # Recreate squares with new shuffled colors
+                squares = []
+                index = 0
+                for row in range(4):
+                    for col in range(6):
+                        if index < 18:
+                            x = 120 + col * 130
+                            y = 120 + row * 130
+                            squares.append({"x": x, "y": y, "color": color_pairs[index], "clicked": False})
+                            index += 1
     
     # GAME LOGIC
     if game_state == "correct" or game_state == "wrong":
@@ -176,21 +212,23 @@ while running:
         
         # Show feedback
         if game_state == "correct":
-            feedback = font.render("MATCH!", True, BLUSH)
+            feedback = font.render("MATCH!", True, GREEN)
             screen.blit(feedback, (WIDTH // 2 - 80, HEIGHT - 80))
         elif game_state == "wrong":
-            feedback = font.render("Try Again!", True, ROSE)
+            feedback = font.render("Try Again!", True, RED)
             screen.blit(feedback, (WIDTH // 2 - 120, HEIGHT - 80))
     
     # Win screen
     elif game_state == "win":
-        win_text = big_font.render("YOU WIN!", True, BLUSH)
+        win_text = big_font.render("YOU WIN!", True, BLOSSOM)
         final_score = font.render(f"Final Score: {score}", True, FROST)
-        restart = small_font.render("Press R to play again", True, FROST)
+        next_lvl = small_font.render("Press SPACE to play next level", True, FROST)
+        restart = small_font.render("Press R to start again", True, FROST)
         
         screen.blit(win_text, (WIDTH // 2 - 150, HEIGHT // 2 - 100))
         screen.blit(final_score, (WIDTH // 2 - 150, HEIGHT // 2 - 20))
-        screen.blit(restart, (WIDTH // 2 - 150, HEIGHT // 2 + 40))
+        screen.blit(next_lvl, (WIDTH // 2 - 150, HEIGHT // 2 + 40))
+        screen.blit(restart, (WIDTH // 2 - 150, HEIGHT // 2 + 60))
     
     pygame.display.flip()
 
